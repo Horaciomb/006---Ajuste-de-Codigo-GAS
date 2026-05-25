@@ -1,0 +1,101 @@
+================================================================================
+  RESUMEN EJECUTIVO — ANÁLISIS YAPE POST-SINCRONIZACIÓN
+  Fecha: 25 de mayo de 2026
+  Script ejecutado: actualizarYAPE() v2.3 (llave CODIGO + C.I.)
+================================================================================
+
+RESULTADO GENERAL
+-----------------
+La sincronización fue exitosa. El sheet de CONTRATOS YAPE pasó de tener
+161 registros faltantes y 474 discrepancias a estar prácticamente alineado
+con la fuente. Cobertura alcanzada: 989/990 registros (99.9%).
+
+
+1. VOLUMEN DE DATOS
+-------------------
+  Fuente YAPE (CSV)             :  990 filas | 23 columnas
+  Sheet CONTRATOS YAPE          :  992 filas | 21 columnas
+  Match exacto (en ambos)       :  989 registros  ← antes: 829
+  Faltantes en contratos        :    1 registro   ← antes: 161
+  En contratos sin match fuente :    0 registros
+
+
+2. REGISTROS FALTANTES (1 restante)
+------------------------------------
+  El único registro que no está en contratos es INACTIVO, por lo que
+  el script no lo insertó (comportamiento correcto: los inactivos que
+  nunca fueron registrados no se incorporan).
+
+  HELEN TATIANA CAZAS BALAJAR  |  CI: 10073239  |  Cod: 443
+  Estado: INACTIVO  |  Ingreso: 15/04/2026  |  Ciudad: LA PAZ
+
+  ACTIVOS faltantes a insertar: 0  ← OBJETIVO CUMPLIDO
+
+
+3. DISCREPANCIAS EN COLUMNAS AUTOMÁTICAS
+-----------------------------------------
+  Antes de la sincronización había 16 diferencias en ESTADO y 474 en SUPERVISOR.
+  Tras ejecutar v2.3, todas las columnas automáticas están alineadas:
+
+    CELULAR                         OK  (0 diferencias)
+    ESTADO (ACTIVO/INACTIVO)        OK  (0 diferencias)  ← antes: 16
+    CARGO                           OK  (0 diferencias)
+    SUPERVISOR                      OK  (0 diferencias)  ← antes: 474
+    CIUDAD                          OK  (0 diferencias)
+
+  El cambio de llave a CODIGO + C.I. permitió encontrar y actualizar
+  correctamente todos los registros que antes se perdían.
+
+
+4. DUPLICADOS EN CONTRATOS YAPE
+---------------------------------
+  Antes de la sincronización: 293 filas duplicadas
+  Después de la sincronización: 5 filas duplicadas  ← reducción del 98%
+
+  Los 5 registros restantes son filas donde el mismo CODIGO+CI aparece
+  dos veces en el sheet. No representan un error de datos (la fuente
+  los tiene una sola vez con 0 duplicados), sino entradas dobles previas
+  en el sheet de contratos que quedaron sin limpiar.
+
+  ACCIÓN RECOMENDADA: Revisar y eliminar manualmente esas 5 filas
+  duplicadas, conservando la que tenga más columnas manuales completas
+  (FECHA DE CONTRATO, ESTADO DE CONTRATO, OBS).
+
+
+5. COLUMNAS MANUALES — CONSERVADAS ÍNTEGRAMENTE
+-------------------------------------------------
+  FECHA DE CONTRATO     :   7 registros con dato   ← igual que antes
+  FIRMA                 :   0 registros con dato
+  ESTADO DE CONTRATO    : 246 registros con dato   ← igual que antes
+  OBS                   :  22 registros con dato   ← igual que antes
+  OBS SUPERVISOR        :   2 registros con dato
+  OBS SUBGERENTE        :   0 registros con dato
+
+  Ninguna columna manual fue sobreescrita. Las 246 entradas de ESTADO
+  DE CONTRATO y las 22 de OBS están intactas.
+
+
+6. REPORTE DE LO EJECUTADO POR EL SCRIPT
+------------------------------------------
+  Registros nuevos agregados          : 35
+  Registros existentes actualizados   : 957
+  Estados actualizados a INACTIVO     : 81
+  Columnas manuales conservadas       : M, P, Q, R, S y T
+
+
+7. ESTADO ACTUAL Y PRÓXIMOS PASOS
+-----------------------------------
+  [RESUELTO]  Activos de ABR/MAY 2026 sin contrato → insertados
+  [RESUELTO]  Discrepancias en ESTADO y SUPERVISOR → corregidas
+  [RESUELTO]  Error de llave CODIGO+CELULAR → migrado a CODIGO+CI
+  [RESUELTO]  Actualización de celulares y demás campos automáticos
+
+  [PENDIENTE] Limpiar las 5 filas duplicadas restantes en CONTRATOS YAPE
+  [PENDIENTE] Hacer el mismo análisis y corrección para CONTRATOS BNB
+  [PENDIENTE] Hacer el mismo análisis y corrección para CONTRATOS ZAS
+
+
+================================================================================
+  El script actualizarYAPE() v2.3 queda como versión estable de producción.
+  Próxima ejecución recomendada: al recibir una nueva versión del CSV de YAPE.
+================================================================================

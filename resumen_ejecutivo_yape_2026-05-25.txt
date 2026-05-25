@@ -1,0 +1,124 @@
+================================================================================
+  RESUMEN EJECUTIVO — ANÁLISIS YAPE: CONTRATOS vs. FUENTE
+  Fecha: 25 de mayo de 2026
+  Notebook: analisis_yape.ipynb
+================================================================================
+
+CONTEXTO
+--------
+Se comparó la planilla fuente YAPE (CSV Anexar1, 990 registros) contra el sheet
+"CONTRATOS YAPE" (976 filas) para identificar registros faltantes, discrepancias
+y problemas de llave de identificación previos a la corrección del Apps Script.
+
+
+1. VOLUMEN DE DATOS
+-------------------
+  Fuente YAPE (CSV Anexar1)     : 990 filas | 23 columnas
+  Sheet CONTRATOS YAPE          : 976 filas | 21 columnas
+  Match exacto (en ambos)       : 829 registros
+  Faltantes en contratos        : 161 registros
+  En contratos sin match fuente :   0 registros
+
+
+2. VALIDACIÓN DE LLAVE DE IDENTIFICACIÓN
+-----------------------------------------
+  LLAVE INCORRECTA (solo CODIGO):
+    - 529 duplicados en fuente YAPE → no sirve como llave única
+    - 516 duplicados en contratos
+
+  LLAVE CORRECTA (CODIGO + C.I.):
+    - 0 duplicados en fuente YAPE → identifica unívocamente a cada persona
+    - 147 duplicados en contratos (filas repetidas a limpiar)
+
+  CONCLUSIÓN: La llave CODIGO + C.I. es la correcta. El Apps Script actual
+  usa CODIGO + CELULAR, lo que genera pérdida silenciosa de actualizaciones
+  cuando el celular cambia. El fix (v2.2) está pendiente de despliegue.
+
+
+3. REGISTROS FALTANTES EN CONTRATOS (161 total)
+------------------------------------------------
+  INACTIVOS sin contrato (históricos, no se insertan)  : 114
+  ACTIVOS que DEBEN insertarse                         :  47
+
+  De los 47 activos faltantes, 28 tienen fecha de ingreso en ABR/MAY 2026,
+  es decir, son ingresos recientes que nunca fueron registrados en contratos.
+
+  Ejemplos de activos faltantes con ingreso ABR/MAY 2026:
+    - Alejandro Salvatierra Villarroel  (SCZ, ingreso 01/04/2026)
+    - Luis Fernando Pacosillo Condori   (SCZ, ingreso 01/04/2026)
+    - Deysi Alcon                       (SCZ, ingreso 06/04/2026)
+    - Sebastian Martinez Roca           (SCZ, ingreso 06/04/2026)
+    - CBBA/SCZ/LPZ Proyecto Gestores    (múltiples ciudades, 06/04/2026)
+    - Danna Michelle Vargas Avalos      (SCZ, ingreso 09/04/2026)
+    - Ingrid Cala Vargas                (SCZ, ingreso 10/04/2026)
+    - Victor Antonio Zurita Borja       (CBBA, ingreso 11/04/2026)
+    - Guadalupe Arancibia Hurtado       (SCZ, ingreso 23/04/2026)
+    - Jhon Alexander Landivar Alvarez   (SCZ, ingreso 28/04/2026)
+    ... y 18 más (ver reporte_faltantes_yape.csv)
+
+  ACCIÓN REQUERIDA: Insertar estos 47 registros en el sheet CONTRATOS YAPE.
+  El archivo "reporte_faltantes_yape.csv" contiene el listado completo listo
+  para carga manual o automatizada.
+
+
+4. DISCREPANCIAS EN REGISTROS EXISTENTES (los 829 con match)
+-------------------------------------------------------------
+  CELULAR                   : SIN diferencias ✓
+  CARGO                     : SIN diferencias ✓
+  CIUDAD                    : SIN diferencias ✓
+
+  ESTADO (ACTIVO/INACTIVO)  : 16 discrepancias ⚠
+    → La fuente dice INACTIVO pero contratos dice ACTIVO.
+    → Causa probable: el Apps Script no actualizó el estado correctamente
+      por el bug de llave CODIGO+CELULAR.
+    → ACCIÓN: Revisar manualmente estos 16 registros y actualizar ESTADO
+      en el sheet de contratos.
+
+  SUPERVISOR                : 474 discrepancias ⚠
+    → No es un error de datos sino de formato: la fuente usa nombre completo
+      (ej. "LIONEL CHABUR LOZA") y contratos usa versión abreviada
+      (ej. "LIONEL CHABUR").
+    → ACCIÓN: Definir si se estandariza al nombre completo (recomendado)
+      o se mantiene la versión abreviada. El script debe respetar esta decisión.
+
+
+5. DUPLICADOS EN SHEET CONTRATOS YAPE
+--------------------------------------
+  293 filas duplicadas detectadas (mismo CODIGO + C.I. aparece 2 veces).
+  Esto explica por qué hay 976 filas pero solo 829 llaves únicas.
+  Causa: ejecuciones anteriores del script habrían insertado registros
+  duplicados al no encontrar match por la llave incorrecta.
+
+  ACCIÓN REQUERIDA: Limpiar duplicados del sheet (conservar la fila con
+  más datos manuales completos: FECHA DE CONTRATO, ESTADO DE CONTRATO, OBS).
+
+
+6. ESTADO DE COLUMNAS MANUALES
+--------------------------------
+  FECHA DE CONTRATO     :   7 registros con dato
+  FIRMA                 :   0 registros con dato
+  ESTADO DE CONTRATO    : 246 registros con dato
+  OBS                   :  22 registros con dato
+  OBS SUPERVISOR        :   2 registros con dato
+  OBS SUBGERENTE        :   0 registros con dato
+
+  Las columnas manuales tienen baja completitud general. La columna más
+  utilizada es ESTADO DE CONTRATO (246 registros). Al limpiar duplicados,
+  se debe priorizar conservar filas que tengan este campo completado.
+
+
+7. PLAN DE ACCIÓN PRIORIZADO
+------------------------------
+  [ALTA]  1. Insertar los 47 ACTIVOS faltantes (usar reporte_faltantes_yape.csv)
+  [ALTA]  2. Limpiar 293 filas duplicadas del sheet CONTRATOS YAPE
+  [ALTA]  3. Corregir los 16 registros con ESTADO incorrecto
+  [MEDIA] 4. Desplegar fix v2.2 en Apps Script: migrar llave a CODIGO + C.I.
+  [MEDIA] 5. Decidir y estandarizar formato del campo SUPERVISOR
+  [BAJA]  6. Extender mismo análisis a CONTRATOS BNB y CONTRATOS ZAS
+
+
+================================================================================
+  Archivos generados por el análisis:
+    - reporte_faltantes_yape.csv  (47 activos listos para insertar)
+    - outputs_notebook.txt        (outputs completos del notebook)
+================================================================================

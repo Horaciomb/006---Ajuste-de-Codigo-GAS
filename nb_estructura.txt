@@ -1,0 +1,156 @@
+﻿=== MARKDOWN #0 ===
+# Análisis YAPE: Contratos vs Fuente
+
+Compara el sheet `CONTRATOS YAPE` contra la planilla fuente `Anexar1` para identificar:
+- Registros faltantes en contratos (nuevos de abr/may 2026)
+- Discrepancias en columnas automáticas
+- Validación de la llave correcta (`CODIGO + CI`)
+
+**Lee CLAUDE.md antes de modificar este notebook.**
+
+=== CODIGO #1 ===
+import pandas as pd
+import numpy as np
+
+# ── Rutas de archivos ──
+# Ajusta estas rutas si mueves los archivos
+PATH_FUENTE  = 'PERSONAL YAPE.csv'
+PATH_CONTRATOS = 'Copia de CONTROL DE CONTRATOS POR PROYECTOS.xlsx'
+HOJA_CONTRATOS = 'CONTRATOS YAPE'
+
+# Cargar fuente YAPE
+df_yape = pd.read_csv(PATH_FUEN
+
+=== MARKDOWN #2 ===
+## 1. Validación de llaves
+
+=== CODIGO #3 ===
+# ── Llave CODIGO (sola) ──
+print('=== LLAVE: solo CODIGO ===')
+print(f'Duplicados en YAPE fuente:    {df_yape["CODIGO"].str.strip().duplicated().sum()}')
+print(f'Duplicados en CONTRATOS:      {df_contratos["CODIGO"].str.strip().duplicated().sum()}')
+print(f'Únicos en YAPE:               {df_yape["C
+
+=== MARKDOWN #4 ===
+## 2. Registros faltantes en Contratos
+
+=== CODIGO #5 ===
+keys_yape      = set(df_yape['KEY'])
+keys_contratos = set(df_contratos['KEY'])
+
+solo_en_yape      = keys_yape - keys_contratos
+solo_en_contratos = keys_contratos - keys_yape
+en_ambos          = keys_yape & keys_contratos
+
+print(f'Match (en ambos):                   {len(en_ambos)}')
+print(f'Solo en 
+
+=== CODIGO #6 ===
+# Detalle de faltantes en contratos
+faltantes = df_yape[df_yape['KEY'].isin(solo_en_yape)].copy()
+
+cols_vista = ['CODIGO', 'C.I.', 'NOMBRE', 'ESTADO (ACTIVO/INACTIVO)', 'FECHA DE INGRESO', 'CIUDAD']
+
+print('=== FALTANTES EN CONTRATOS ===')
+print(f'Total: {len(faltantes)}')
+print()
+print('Por estado:
+
+=== CODIGO #7 ===
+# Filtrar específicamente abril y mayo 2026
+def parse_fecha(f):
+    try:
+        return pd.to_datetime(f, format='%m/%d/%Y')
+    except:
+        try:
+            return pd.to_datetime(f)
+        except:
+            return pd.NaT
+
+faltantes = faltantes.copy()
+faltantes['FECHA_PARSED'] = faltantes['FE
+
+=== MARKDOWN #8 ===
+## 3. Discrepancias en registros que sí existen en ambos
+
+=== CODIGO #9 ===
+# Comparar columnas automáticas en registros que existen en ambos
+# Mapeo fuente → contratos
+MAPEO = {
+    'CELULAR':                   'CELULAR',
+    'ESTADO (ACTIVO/INACTIVO)':  'ESTADO',
+    'CARGO':                     'CARGO',
+    'SUPERVISOR':                'SUPERVISOR',
+    'CIUDAD':        
+
+=== MARKDOWN #10 ===
+## 4. Duplicados en CONTRATOS YAPE
+
+=== CODIGO #11 ===
+# Ver duplicados actuales en el sheet de contratos
+dups_contratos = df_contratos[df_contratos['KEY'].duplicated(keep=False)].copy()
+dups_contratos = dups_contratos.sort_values(['CODIGO', 'FECHA DE INGRESO'])
+
+print(f'Filas duplicadas (mismo CODIGO+CI) en CONTRATOS: {len(dups_contratos)}')
+print()
+
+c
+
+=== MARKDOWN #12 ===
+## 5. Columnas manuales — validar que no se perdieron
+
+=== CODIGO #13 ===
+# Columnas manuales: M=FECHA DE CONTRATO, P=FIRMA, Q=ESTADO DE CONTRATO, R=OBS, S=OBS SUPERVISOR, T=OBS SUBGERENTE
+cols_manuales = ['FECHA DE CONTRATO', 'FIRMA', 'ESTADO DE CONTRATO', 'OBS', 'OBS SUPERVISOR', 'OBS SUBGERENTE']
+
+print('=== COLUMNAS MANUALES: datos no vacíos ===')
+for col in cols_manu
+
+=== MARKDOWN #14 ===
+## 6. Generar reporte de registros a insertar
+
+=== CODIGO #15 ===
+# Lista limpia de ACTIVOS que faltan en contratos → estos son los que deben insertarse
+activos_faltantes_clean = faltantes[
+    faltantes['ESTADO (ACTIVO/INACTIVO)'].str.upper().str.strip() == 'ACTIVO'
+][[
+    'EMPRESA', 'CODIGO', 'C.I.', 'CELULAR', 'NOMBRE',
+    'APELLIDO PATERNO', 'APELLIDO MATERN
+
+=== CODIGO #16 ===
+# Guardar reporte a CSV para revisión
+activos_faltantes_clean.drop(columns='FECHA_PARSED').to_csv('reporte_faltantes_yape.csv', index=False, encoding='utf-8-sig')
+print('Guardado: reporte_faltantes_yape.csv')
+
+=== MARKDOWN #17 ===
+## 7. Código Apps Script corregido — llave CODIGO + CI
+
+El siguiente snippet reemplaza la construcción del mapa en `actualizarYAPE()`.
+
+```javascript
+// ── CAMBIO CLAVE: llave = CODIGO + "|" + CI (no celular) ──
+
+// Al leer destino:
+datosDestino.forEach(function(fila, index) {
+  var codigo = String(fila[1] || '').trim();  // col B
+  var ci     = String(fila[2] || '').trim();  // col C  ← NUEVO
+  var clave  = codigo + '|' + ci;             // ← llave compuesta
+  
+  if (codigo !== '' && ci !== '') {
+    codigosDestino.add(clave);
+    mapaDestino[clave] = { filaReal: index + 2, datos: fila };
+  }
+});
+
+// Al procesar origen:
+datosOrigen.forEach(function(filaOrigen) {
+  var codigo = String(filaOrigen[MAPEO_YAPE.codigo] || '').trim();
+  var ci     = String(filaOrigen[MAPEO_YAPE.ci]     || '').trim();  // ← NUEVO
+  var clave  = codigo + '|' + ci;                                   // ← llave compuesta
+  
+  // ... resto de la lógica usando `clave` en vez de la combinación anterior
+});
+```
+
+Con esta llave, cada persona que rotó por el mismo CODIGO queda como fila separada, que es el comportamiento correcto dado que el sheet de contratos ya los tiene así.
+

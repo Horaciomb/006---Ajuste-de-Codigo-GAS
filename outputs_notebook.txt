@@ -1,0 +1,329 @@
+﻿--- MARKDOWN #0 ---
+# Análisis YAPE: Contratos vs Fuente
+
+Compara el sheet `CONTRATOS YAPE` contra la planilla fuente `Anexar1` para identificar:
+- Registros faltantes en contratos (nuevos de abr/may 2026)
+- Discrepancias en columnas automáticas
+- Validación de la llave correcta (`CODIGO + CI`)
+
+**Lee CLAUDE.md antes de modificar este notebook.**
+
+--- CODIGO #1 OUTPUT ---
+Fuente YAPE:        990 filas | 23 columnas
+Contratos YAPE:     976 filas | 21 columnas
+
+
+--- MARKDOWN #2 ---
+## 1. Validación de llaves
+
+--- CODIGO #3 OUTPUT ---
+=== LLAVE: solo CODIGO ===
+Duplicados en YAPE fuente:    529
+Duplicados en CONTRATOS:      516
+Únicos en YAPE:               461
+Únicos en CONTRATOS:          460
+
+=== LLAVE: CODIGO + C.I. ===
+Duplicados en YAPE fuente:    0
+Duplicados en CONTRATOS:      147
+Únicos en YAPE:               990
+Únicos en CONTRATOS:          829
+
+
+--- MARKDOWN #4 ---
+## 2. Registros faltantes en Contratos
+
+--- CODIGO #5 OUTPUT ---
+Match (en ambos):                   829
+Solo en fuente YAPE (faltantes):    161
+Solo en CONTRATOS (sin match):      0
+
+
+--- CODIGO #6 OUTPUT ---
+=== FALTANTES EN CONTRATOS ===
+Total: 161
+
+Por estado:
+ESTADO (ACTIVO/INACTIVO)
+INACTIVO    114
+ACTIVO       47
+Name: count, dtype: int64
+
+ACTIVOS faltantes (deben insertarse): 47
+
+    CODIGO      C.I.                             NOMBRE  \
+463    302  14384709              CRISTIAN TOLA ROSALES   
+608    275   5977858                BORIS RAMIREZ PEREZ   
+566    236  13843708             PAOLA HILAQUITA SIÑANI   
+775    106  11400186           BERENISE MERUBIA CARDOZO   
+520    288  13562898              YESSICA SILES VELAZCO   
+353    292   8792592            RODRIGO TERRAZAS FLORES   
+523    308   9427968           FREDDY VEIZAGA VERDUGUEZ   
+468    150   5396506               RENE OSINAGA ALVAREZ   
+375    157   5360229                NERIDA SUPEPI CHUVE   
+470    158   3370981       MARIA ISABEL MONTALBA MEDINA   
+548    156  15741055               ANDREA ARANCIBIA RUA   
+528    323  13824406               HAROLD ADUANA FLORES   
+772    316  14216940             YOCELIN CARBALLO ROJAS   
+546    152   5118484  JULIO CESAR BALLESTEROS VELASQUEZ   
+623    294   7087093     CINTHIA VERONICA MAMANI MAMANI   
+550    163   8905079   ALEJANDRO SALVATIERRA VILLARROEL   
+552    182  13398856    LUIS FERNANDO PACOSILLO CONDORI   
+384    180   8229499                 INGRID CALA VARGAS   
+529    324   5244234        VICTOR ANTONIO ZURITA BORJA   
+385    189  14634563          DEYNA YHAMEL VARGAS CALLE   
+553    183   7753510        GUADALUPE ARANCIBIA HURTADO   
+554    184  13704156    JHON ALEXANDER LANDIVAR ALVAREZ   
+555    185   9171524       ANGELA CAMILA NOGALES QUIROZ   
+358    328   7705610             CBBA PROYECTO GESTORES   
+379    172   9760767            SEBASTIAN MARTINEZ ROCA   
+473    168   7705610              SCZ PROYECTO GESTORES   
+471    418   7705610              LPZ PROYECTO GESTORES   
+382    175   3897209                        DEYSI ALCON   
+551    179  15254135       DANNA MICHELLE VARGAS AVALOS   
+562    232  10576388        LEYMER MARIO FERNANDEZ POMA   
+559    190   4668762         MARIA NELA GUTIERREZ ROJAS   
+558    188  10791970        ANA GABRIELA SUAREZ HURTADO   
+535    334  13481509          LUIS ANGEL CACERES CLAROS   
+536    335   9423542        PAOLA ANDREA GUILLEN BEDOYA   
+537    336   9472010    MIJAEL FERNANDO ARELLANO MAMANI   
+560    191  13699144                        YOEL ROMERO   
+386    192   8966481            VIANCA MORALES GONZALES   
+556    186  13081723           EVA PAOLA ANDREA SAURICI   
+557    187  15714354              MARLENE MACHACA ACUÑA   
+534    333   3506787    HEEDY GIOVANNA FLORES RODRIGUEZ   
+576    231   7412893       LEIDY CLARA GUTIERREZ FLORES   
+574    218   4468744       JOSE ALBERTO URQUIDI TORRICO   
+568    238   7968944       SILVIA EUGENIA AQUINO FLORES   
+680    219  14445306       HECTOR ADONAI ZAPATA VELARDE   
+595    257   8291973                 VICTOR HUGO TICONA   
+565    235   6790254          NAYELI WARA RAMOS LLANQUE   
+606    273   6815939        MAYRA GURSEL ZALLES MORALES   
+
+    ESTADO (ACTIVO/INACTIVO) FECHA DE INGRESO      CIUDAD  
+463                   ACTIVO         1/2/2026  COCHABAMBA  
+608                   ACTIVO        10/5/2024  
+
+--- CODIGO #7 OUTPUT ---
+Faltantes con ingreso ABR/MAY 2026: 28
+
+
+    CODIGO      C.I.                            NOMBRE  \
+550    163   8905079  ALEJANDRO SALVATIERRA VILLARROEL   
+552    182  13398856   LUIS FERNANDO PACOSILLO CONDORI   
+358    328   7705610            CBBA PROYECTO GESTORES   
+473    168   7705610             SCZ PROYECTO GESTORES   
+471    418   7705610             LPZ PROYECTO GESTORES   
+382    175   3897209                       DEYSI ALCON   
+379    172   9760767           SEBASTIAN MARTINEZ ROCA   
+453    176   7824950    JESUS CONRADO CAMACHO LIZARAZU   
+454    177   9714935            MIGUEL CONDORI VALERIA   
+551    179  15254135      DANNA MICHELLE VARGAS AVALOS   
+384    180   8229499                INGRID CALA VARGAS   
+529    324   5244234       VICTOR ANTONIO ZURITA BORJA   
+426    329   5066184         MERY LAURA BUSTILLOS CRUZ   
+385    189  14634563         DEYNA YHAMEL VARGAS CALLE   
+416    443  10073239       HELEN TATIANA CAZAS BALAJAR   
+553    183   7753510       GUADALUPE ARANCIBIA HURTADO   
+554    184  13704156   JHON ALEXANDER LANDIVAR ALVAREZ   
+555    185   9171524      ANGELA CAMILA NOGALES QUIROZ   
+559    190   4668762        MARIA NELA GUTIERREZ ROJAS   
+556    186  13081723          EVA PAOLA ANDREA SAURICI   
+557    187  15714354             MARLENE MACHACA ACUÑA   
+534    333   3506787   HEEDY GIOVANNA FLORES RODRIGUEZ   
+558    188  10791970       ANA GABRIELA SUAREZ HURTADO   
+535    334  13481509         LUIS ANGEL CACERES CLAROS   
+536    335   9423542       PAOLA ANDREA GUILLEN BEDOYA   
+537    336   9472010   MIJAEL FERNANDO ARELLANO MAMANI   
+560    191  13699144                       YOEL ROMERO   
+386    192   8966481           VIANCA MORALES GONZALES   
+
+    ESTADO (ACTIVO/INACTIVO) FECHA DE INGRESO      CIUDAD FECHA_PARSED  
+550                   ACTIVO         4/1/2026  SANTA CRUZ   2026-04-01  
+552                   ACTIVO         4/1/2026  SANTA CRUZ   2026-04-01  
+358                   ACTIVO         4/6/2026  COCHABAMBA   2026-04-06  
+473                   ACTIVO         4/6/2026  SANTA CRUZ   2026-04-06  
+471                   ACTIVO         4/6/2026      LA PAZ   2026-04-06  
+382                   ACTIVO         4/6/2026  SANTA CRUZ   2026-04-06  
+379                   ACTIVO         4/6/2026  SANTA CRUZ   2026-04-06  
+453                 INACTIVO         4/7/2026  SANTA CRUZ   2026-04-07  
+454                 INACTIVO         4/7/2026  SANTA CRUZ   2026-04-07  
+551                   ACTIVO         4/9/2026  SANTA CRUZ   2026-04-09  
+384                   ACTIVO        4/10/2026  SANTA CRUZ   2026-04-10  
+529                   ACTIVO        4/11/2026  COCHABAMBA   2026-04-11  
+426                 INACTIVO        4/13/2026  COCHABAMBA   2026-04-13  
+385                   ACTIVO        4/13/2026  SANTA CRUZ   2026-04-13  
+416                 INACTIVO        4/15/2026      LA PAZ   2026-04-15  
+553                   ACTIVO        4/23/2026  SANTA CRUZ   2026-04-23  
+554                   ACTIVO        4/28/2026  SANTA CRUZ   2026-04-28  
+555
+
+--- MARKDOWN #8 ---
+## 3. Discrepancias en registros que sí existen en ambos
+
+--- CODIGO #9 OUTPUT ---
+
+⚠ ESTADO (ACTIVO/INACTIVO) → ESTADO: 16 discrepancias
+                fuente contrato
+KEY                            
+111|9588758   INACTIVO   ACTIVO
+164|4668762   INACTIVO   ACTIVO
+165|9270089   INACTIVO   ACTIVO
+166|9714936   INACTIVO   ACTIVO
+167|15567682  INACTIVO   ACTIVO
+247|3326009   INACTIVO   ACTIVO
+268|7958673   INACTIVO   ACTIVO
+284|6799045   INACTIVO   ACTIVO
+290|6521548   INACTIVO   ACTIVO
+296|9442119   INACTIVO   ACTIVO
+
+⚠ SUPERVISOR → SUPERVISOR: 474 discrepancias
+                                           fuente          contrato
+KEY                                                                
+100|5981781                    LIONEL CHABUR LOZA     LIONEL CHABUR
+100|7992451          JOSE ALBERTO URQUIDI TORRICO      JOSE URQUIDI
+101|7450894          JOSE ALBERTO URQUIDI TORRICO      JOSE URQUIDI
+101|8278526                    LIONEL CHABUR LOZA     LIONEL CHABUR
+102|12622032                   LIONEL CHABUR LOZA     LIONEL CHABUR
+103|2442462             NAYELI WARA RAMOS LLANQUE       NAYELY WARA
+104|10933168            NAYELI WARA RAMOS LLANQUE       NAYELY WARA
+104|8822904          JOSE ALBERTO URQUIDI TORRICO      JOSE URQUIDI
+105|4282045             RUTH NOEMI QUISPE JALLAZA       RUTH QUISPE
+106|10823377  VERONICA DEL PILAR NAVARRO SANJINEZ  VERONICA NAVARRO
+
+=== RESUMEN DISCREPANCIAS ===
+CELULAR                             ✓ OK
+ESTADO (ACTIVO/INACTIVO)            ⚠ 16 diferencias
+CARGO                               ✓ OK
+SUPERVISOR                          ⚠ 474 diferencias
+CIUDAD                              ✓ OK
+
+
+--- MARKDOWN #10 ---
+## 4. Duplicados en CONTRATOS YAPE
+
+--- CODIGO #11 OUTPUT ---
+Filas duplicadas (mismo CODIGO+CI) en CONTRATOS: 293
+
+
+    CODIGO      C.I.                   NOMBRE COMPLETO    ESTADO  \
+358     10   8145005           Liliana Fernandez Rojas  INACTIVO   
+86      10   8145005           Liliana Fernandez Rojas  INACTIVO   
+846    102   5386582     Telma Banessa Saavedra Cayoja  INACTIVO   
+27     102   5386582     Telma Banessa Saavedra Cayoja  INACTIVO   
+847    105   3507313           Eliana Nayda Paz Mamani  INACTIVO   
+655    105   3507313           Eliana Nayda Paz Mamani  INACTIVO   
+910    106  12637660   Herlan Rodrigo Quispe Callisaya  INACTIVO   
+242    106  12637660   Herlan Rodrigo Quispe Callisaya  INACTIVO   
+851    111   9588758         Juan Pablo Flores Huallpa  INACTIVO   
+225    111   9588758         Juan Pablo Flores Huallpa    ACTIVO   
+583    113  14465782            Soledad Garcia Montaño  INACTIVO   
+82     113  14465782            Soledad Garcia Montaño  INACTIVO   
+853    114  15714354             Marlene Machaca Acuña  INACTIVO   
+683    114  15714354             Marlene Machaca Acuña  INACTIVO   
+854    115   9760767           Sebastian Martinez Roca  INACTIVO   
+236    115   9760767           Sebastian Martinez Roca  INACTIVO   
+856    117  10781054  Junior Andres Camacho Justiniano  INACTIVO   
+702    117  10781054  Junior Andres Camacho Justiniano  INACTIVO   
+857    120  14465782            Soledad Garcia Montaño  INACTIVO   
+755    120  14465782            Soledad Garcia Montaño  INACTIVO   
+
+        FECHA DE INGRESO  
+358           01/07/2025  
+86   2025-07-01 00:00:00  
+846           01/11/2025  
+27   2025-11-01 00:00:00  
+847           17/11/2025  
+655  2025-11-17 00:00:00  
+910           02/10/2024  
+242  2024-10-02 00:00:00  
+851           01/12/2025  
+225  2025-12-01 00:00:00  
+583           09/12/2025  
+82   2025-11-10 00:00:00  
+853           06/01/2026  
+683  2026-01-06 00:00:00  
+854           06/01/2026  
+236  2026-01-06 00:00:00  
+856           07/01/2026  
+702  2026-01-07 00:00:00  
+857           16/01/2026  
+755  2026-01-16 00:00:00  
+
+--- MARKDOWN #12 ---
+## 5. Columnas manuales — validar que no se perdieron
+
+--- CODIGO #13 OUTPUT ---
+=== COLUMNAS MANUALES: datos no vacíos ===
+FECHA DE CONTRATO        :    7 registros con dato
+FIRMA                    :    0 registros con dato
+ESTADO DE CONTRATO       :  246 registros con dato
+OBS                      :   22 registros con dato
+OBS SUPERVISOR           :    2 registros con dato
+OBS SUBGERENTE           :    0 registros con dato
+
+
+--- MARKDOWN #14 ---
+## 6. Generar reporte de registros a insertar
+
+--- CODIGO #15 OUTPUT ---
+Total ACTIVOS a insertar: 47
+
+    EMPRESA CODIGO      C.I.   CELULAR                             NOMBRE  \
+574    YAPE    218   4468744  72215525       JOSE ALBERTO URQUIDI TORRICO   
+606    YAPE    273   6815939  65607126        MAYRA GURSEL ZALLES MORALES   
+565    YAPE    235   6790254  69714550          NAYELI WARA RAMOS LLANQUE   
+608    YAPE    275   5977858  69194361                BORIS RAMIREZ PEREZ   
+566    YAPE    236  13843708  69745433             PAOLA HILAQUITA SIÑANI   
+623    YAPE    294   7087093  78847176     CINTHIA VERONICA MAMANI MAMANI   
+562    YAPE    232  10576388  75844371        LEYMER MARIO FERNANDEZ POMA   
+576    YAPE    231   7412893  70360925       LEIDY CLARA GUTIERREZ FLORES   
+680    YAPE    219  14445306  61238666       HECTOR ADONAI ZAPATA VELARDE   
+568    YAPE    238   7968944  69793053       SILVIA EUGENIA AQUINO FLORES   
+595    YAPE    257   8291973  65599128                 VICTOR HUGO TICONA   
+775    YAPE    106  11400186  69037293           BERENISE MERUBIA CARDOZO   
+520    YAPE    288  13562898  72711484              YESSICA SILES VELAZCO   
+353    YAPE    292   8792592  77961757            RODRIGO TERRAZAS FLORES   
+463    YAPE    302  14384709  63992741              CRISTIAN TOLA ROSALES   
+523    YAPE    308   9427968  64852531           FREDDY VEIZAGA VERDUGUEZ   
+468    YAPE    150   5396506  78494491               RENE OSINAGA ALVAREZ   
+772    YAPE    316  14216940  72740281             YOCELIN CARBALLO ROJAS   
+546    YAPE    152   5118484  68226788  JULIO CESAR BALLESTEROS VELASQUEZ   
+375    YAPE    157   5360229  73111557                NERIDA SUPEPI CHUVE   
+470    YAPE    158   3370981  73159690       MARIA ISABEL MONTALBA MEDINA   
+548    YAPE    156  15741055  71663335               ANDREA ARANCIBIA RUA   
+528    YAPE    323  13824406  77987212               HAROLD ADUANA FLORES   
+552    YAPE    182  13398856  75368649    LUIS FERNANDO PACOSILLO CONDORI   
+550    YAPE    163   8905079  69158061   ALEJANDRO SALVATIERRA VILLARROEL   
+358    YAPE    328   7705610  77042024             CBBA PROYECTO GESTORES   
+471    YAPE    418   7705610  77042024              LPZ PROYECTO GESTORES   
+382    YAPE    175   3897209  76358681                        DEYSI ALCON   
+473    YAPE    168   7705610  77042024              SCZ PROYECTO GESTORES   
+379    YAPE    172   9760767  76081536            SEBASTIAN MARTINEZ ROCA   
+551    YAPE    179  15254135  76133002       DANNA MICHELLE VARGAS AVALOS   
+384    YAPE    180   8229499  78027713                 INGRID CALA VARGAS   
+529    YAPE    324   5244234  72743411        VICTOR ANTONIO ZURITA BORJA   
+385    YAPE    189  14634563  60834714          DEYNA YHAMEL VARGAS CALLE   
+553    YAPE    183   7753510  62278127        GUADALUPE ARANCIBIA HURTADO   
+554    YAPE    184  13704156  77682233    JHON ALEXANDER LANDIVAR ALVAREZ   
+555    YAPE    185   9171524  73027831       ANGELA CAMILA NOGALES QUIROZ   
+559    YAPE    190   4668762  76557127         MARIA NELA GUTIERREZ ROJAS 
+
+--- CODIGO #16 OUTPUT ---
+Guardado: reporte_faltantes_yape.csv
+
+
+--- MARKDOWN #17 ---
+## 7. Código Apps Script corregido — llave CODIGO + CI
+
+El siguiente snippet reemplaza la construcción del mapa en `actualizarYAPE()`.
+
+```javascript
+// ── CAMBIO CLAVE: llave = CODIGO + "|" + CI (no celular) ──
+
+// Al leer destino:
+datosDestino.forEach(function(fila, index) {
+  var codigo = String(fila[1] || '').trim();  // col B
+  var ci     = String(fila[2] || '').trim();  // col C  ← NUEVO
+  v
+

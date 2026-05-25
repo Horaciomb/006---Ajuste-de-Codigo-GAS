@@ -1,0 +1,53 @@
+﻿Fuente YAPE:          990 filas | 23 columnas
+Contratos YAPE:       992 filas | 21 columnas
+
+=== LLAVE: solo CODIGO ===
+Duplicados en YAPE fuente:    529
+Duplicados en CONTRATOS:      532
+Únicos en YAPE:               461
+Únicos en CONTRATOS:          460
+
+=== LLAVE: CODIGO + C.I. ===
+Duplicados en YAPE fuente:    0
+Duplicados en CONTRATOS:      3
+Únicos en YAPE:               990
+Únicos en CONTRATOS:          989
+
+Match (en ambos):                   989
+Solo en fuente YAPE (faltantes):    1
+Solo en CONTRATOS (sin match):      0
+
+=== FALTANTES EN CONTRATOS ===
+Total: 1
+
+Por estado:
+ESTADO (ACTIVO/INACTIVO)
+INACTIVO    1
+
+ACTIVOS faltantes (deben insertarse): 0
+
+Faltantes con ingreso ABR/MAY 2026: 1
+    CODIGO      C.I.                       NOMBRE ESTADO (ACTIVO/INACTIVO) FECHA DE INGRESO  CIUDAD
+416    443  10073239  HELEN TATIANA CAZAS BALAJAR                 INACTIVO        4/15/2026  LA PAZ
+
+=== DISCREPANCIAS EN REGISTROS EXISTENTES ===
+
+=== RESUMEN DISCREPANCIAS ===
+  CELULAR                             OK
+  ESTADO (ACTIVO/INACTIVO)            OK
+  CARGO                               OK
+  SUPERVISOR                          OK
+  CIUDAD                              OK
+
+=== DUPLICADOS EN CONTRATOS ===
+Filas duplicadas (mismo CODIGO+CI): 5
+
+=== COLUMNAS MANUALES: datos no vacíos ===
+  FECHA DE CONTRATO             :     7 registros con dato
+  FIRMA                         :     0 registros con dato
+  ESTADO DE CONTRATO            :   246 registros con dato
+  OBS                           :    22 registros con dato
+  OBS SUPERVISOR                :     2 registros con dato
+  OBS SUBGERENTE                :     0 registros con dato
+
+Total ACTIVOS a insertar: 0
