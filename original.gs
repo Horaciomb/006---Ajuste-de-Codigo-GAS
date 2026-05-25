@@ -1,6 +1,6 @@
 /**
  * CONTROL DE CONTRATOS POR PROYECTOS - Apps Script
- * Versión: 2.3 (llave CODIGO + C.I. para YAPE, BNB y ZAS)
+ * Versión: 2.4 (estado refleja directamente la fuente, sin condición de fechaSalida)
  * Fecha: Mayo 2026
  */
 
@@ -556,17 +556,14 @@ function actualizarYAPE() {
     var codigo       = String(filaOrigen[MAPEO_YAPE.codigo]      || '').trim();
     var ci           = String(filaOrigen[MAPEO_YAPE.ci]          || '').trim();
     var estadoOrigen = String(filaOrigen[MAPEO_YAPE.estado]      || '').trim().toUpperCase();
-    var fechaSalida  = String(filaOrigen[MAPEO_YAPE.fechaSalida] || '').trim();
     var ciudad       = filaOrigen[MAPEO_YAPE.ciudad]              || '';
 
     if (codigo === '' || ci === '') return;
 
     var key = codigo + '|' + ci;
 
-    // Solo marca INACTIVO si la fuente lo dice Y tiene fecha de salida
-    var estadoFinal = (estadoOrigen === 'INACTIVO' && fechaSalida !== '')
-      ? 'INACTIVO'
-      : 'ACTIVO';
+    // El estado refleja directamente la fuente — si la fuente dice INACTIVO, el sheet dice INACTIVO
+    var estadoFinal = estadoOrigen !== '' ? estadoOrigen : 'ACTIVO';
 
     if (clavesDestino.has(key)) {
       // Actualizar todas las filas con esta llave (cubre duplicados en el sheet)
@@ -736,16 +733,14 @@ function actualizarBNB() {
     var codigo       = String(filaOrigen[MAPEO_BNB.codigo]      || '').trim();
     var ci           = String(filaOrigen[MAPEO_BNB.ci]          || '').trim();
     var estadoOrigen = String(filaOrigen[MAPEO_BNB.estado]      || '').trim().toUpperCase();
-    var fechaSalida  = String(filaOrigen[MAPEO_BNB.fechaSalida] || '').trim();
     var ciudad       = filaOrigen[MAPEO_BNB.ciudad]              || '';
 
     if (codigo === '' || ci === '') return;
 
     var key = codigo + '|' + ci;
 
-    var estadoFinal = (estadoOrigen === 'INACTIVO' && fechaSalida !== '')
-      ? 'INACTIVO'
-      : 'ACTIVO';
+    // El estado refleja directamente la fuente
+    var estadoFinal = estadoOrigen !== '' ? estadoOrigen : 'ACTIVO';
 
     if (clavesDestino.has(key)) {
       mapaDestino[key].forEach(function(idx) {
@@ -918,7 +913,6 @@ function actualizarZAS() {
     var codigo       = String(filaOrigen[MAPEO_ZAS.codigo]      || '').trim();
     var ci           = String(filaOrigen[MAPEO_ZAS.ci]          || '').trim();
     var estadoOrigen = String(filaOrigen[MAPEO_ZAS.estado]      || '').trim().toUpperCase();
-    var fechaSalida  = String(filaOrigen[MAPEO_ZAS.fechaSalida] || '').trim();
     var usuario      = String(filaOrigen[MAPEO_ZAS.usuario]     || '').trim().toUpperCase();
 
     // Ciudad: usar ciudad_txt (más descriptivo) con fallback a ciudad
@@ -934,9 +928,8 @@ function actualizarZAS() {
 
     var key = codigo + '|' + ci;
 
-    var estadoFinal = (estadoOrigen === 'INACTIVO' && fechaSalida !== '')
-      ? 'INACTIVO'
-      : 'ACTIVO';
+    // El estado refleja directamente la fuente
+    var estadoFinal = estadoOrigen !== '' ? estadoOrigen : 'ACTIVO';
 
     if (clavesDestino.has(key)) {
       mapaDestino[key].forEach(function(idx) {

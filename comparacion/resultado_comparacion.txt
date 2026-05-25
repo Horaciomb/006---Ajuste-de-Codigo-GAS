@@ -1,0 +1,146 @@
+﻿======================================================================
+HOJA: CONTRATOS YAPE
+======================================================================
+  Original :   957 filas | 21 columnas
+  Con cambios:   992 filas | 21 columnas
+
+  Llaves únicas original   : 954
+  Llaves únicas con cambios: 989
+  En ambos                 : 954
+
+  NUEVAS EN COPIA (no estaban en original): 35
+CODIGO     C.I.               NOMBRE COMPLETO ESTADO FECHA DE INGRESO     CIUDAD
+   451 11548027  Miguel Angel Medrano Escobar ACTIVO       06/05/2026     LA PAZ
+   189 14634563     Deyna Yhamel Vargas Calle ACTIVO       13/04/2026 SANTA CRUZ
+   192  8966481       Vianca Morales Gonzales ACTIVO       20/05/2026 SANTA CRUZ
+   444  6066186        Abraham Huanca Mendoza ACTIVO       28/04/2026     LA PAZ
+   448  3326009   Iggor Assef Valdez Guisbert ACTIVO       01/05/2026     LA PAZ
+   454 10903187  Camila Fiorela Lavayen Lopez ACTIVO       01/05/2026     LA PAZ
+   456  9199587    Jimmy Melvin Ochoa Miranda ACTIVO       01/05/2026     LA PAZ
+   457  8426505     Blanca Nilda Laura Flores ACTIVO       01/05/2026     LA PAZ
+   442 15163216            Yesica Mamani Nina ACTIVO       22/04/2026     LA PAZ
+   445 12573629    Jamil Markus Marce Ramirez ACTIVO       29/04/2026     LA PAZ
+   446 11068855          Alejandro Copa Mayta ACTIVO       05/05/2026     LA PAZ
+   447  7557900      Ashem Enzo Diaz Anibarro ACTIVO       01/05/2026     LA PAZ
+   449  6734443 Andres Ernesto Perez Orellano ACTIVO       06/05/2026     LA PAZ
+   450  6152271   Mayte Tsade Heredia Zunieta ACTIVO       06/05/2026     LA PAZ
+   452 13764579     Mijael Kevin Merlo Aliaga ACTIVO       06/05/2026     LA PAZ
+   453  7047635     Richard Asturillo Arhuata ACTIVO       11/05/2026     LA PAZ
+   455  4789839    Mijal Ballestero Arredondo ACTIVO       01/05/2026     LA PAZ
+   458  4819218   Shantal Melissa Duran Ramos ACTIVO       01/05/2026     LA PAZ
+   459 10073239   Helen Tatiana Cazas Balajar ACTIVO       01/05/2026     LA PAZ
+   460  9243184   Jade Mayerly Mamani Condori ACTIVO       15/05/2026     LA PAZ
+
+  COLUMNAS CON DIFERENCIAS (en registros existentes en ambos):
+    FECHA DE INGRESO              :  954 filas cambiaron
+    SUPERVISOR                    :  880 filas cambiaron
+    ESTADO                        :   82 filas cambiaron
+    NOMBRE COMPLETO               :    2 filas cambiaron
+    NOMBRES                       :    2 filas cambiaron
+    CARGO                         :    2 filas cambiaron
+    CIUDAD                        :    2 filas cambiaron
+    DPTO                          :    2 filas cambiaron
+    APELLIDO PATERNO              :    1 filas cambiaron
+
+  Muestra de cambios en [FECHA DE INGRESO]:
+    Ana Gabriela Cayo Cayo              | antes: 2025-08-01 00:00:00       | ahora: 01/08/2025
+    Andres Arturo Collao Teran          | antes: 2025-08-18 00:00:00       | ahora: 18/08/2025
+    Arquimides Ychu Rojas               | antes: 2025-05-01 00:00:00       | ahora: 01/05/2025
+    Blanca Nilda Laura Flores           | antes: 2025-08-11 00:00:00       | ahora: 11/08/2025
+    Camila Fiorela Lavayen Lopez        | antes: 2024-10-29 00:00:00       | ahora: 29/10/2024
+
+  Muestra de cambios en [SUPERVISOR]:
+    Ana Gabriela Cayo Cayo              | antes: Luis Apaza                | ahora: Luis Alberto Apaza Tindal
+    Andres Arturo Collao Teran          | antes: Luis Apaza                | ahora: Luis Alberto Apaza Tindal
+    Arquimides Ychu Rojas               | antes: Jhennifer Rocha           | ahora: Jhennifer Melani Rocha Co
+    Blanca Nilda Laura Flores           | antes: Jhennifer Rocha           | ahora: Jhennifer Melani Rocha Co
+    Camila Fiorela Lavayen Lopez        | antes: Lionel Chabur             | ahora: Lionel Chabur Loza
+
+  Muestra de cambios en [ESTADO]:
+    Yessenia Andrea Vargas Ticlla       | antes: ACTIVO                    | ahora: INACTIVO
+    Raquel Ester Calderon Ossio         | antes: ACTIVO                    | ahora: INACTIVO
+    Cristian Arturo Blanco Mamani       | antes: ACTIVO                    | ahora: INACTIVO
+    Grissel Stefany Chipana Alborta     | antes: ACTIVO                    | ahora: INACTIVO
+    Arianna Salinas Malaga              | antes: ACTIVO                    | ahora: INACTIVO
+
+  Filas duplicadas (CODIGO+CI): original=5, con cambios=5
+
+======================================================================
+HOJA: CONTRATOS BNB
+======================================================================
+  Original :   350 filas | 20 columnas
+  Con cambios:   350 filas | 20 columnas
+
+  Llaves únicas original   : 343
+  Llaves únicas con cambios: 343
+  En ambos                 : 343
+
+  Sin filas nuevas.
+
+  COLUMNAS CON DIFERENCIAS (en registros existentes en ambos):
+    FECHA DE INGRESO              :  341 filas cambiaron
+    CELULAR                       :    1 filas cambiaron
+    APELLIDO PATERNO              :    1 filas cambiaron
+    APELLIDO MATERNO              :    1 filas cambiaron
+    ESTADO                        :    1 filas cambiaron
+
+  Muestra de cambios en [FECHA DE INGRESO]:
+    David Gonzales Salazar              | antes: 2025-10-11 00:00:00       | ahora: 10/11/2025
+    Luis Fernando Rojas Salvatierra     | antes: 2025-11-12 00:00:00       | ahora: 11/12/2025
+    Miguel Alfonzo Orellana Teran       | antes: 2024-11-20 00:00:00       | ahora: 20/11/2024
+    Ana Lorena Soliz Janco              | antes: 10/21/2025                | ahora: 21/10/2025
+    Halison Geraldine Vidaurre Aguila   | antes: 2025-10-04 00:00:00       | ahora: 10/4/2025
+
+  Muestra de cambios en [CELULAR]:
+    Génesis Shantel Padilla Boyerman    | antes: 73689456                  | ahora: 46142
+
+  Muestra de cambios en [APELLIDO PATERNO]:
+    Jimena Rivero Loayza                | antes: Loayza                    | ahora: Rivero
+
+  Filas duplicadas (CODIGO+CI): original=13, con cambios=13
+
+======================================================================
+HOJA: CONTRATOS ZAS
+======================================================================
+  Original :   376 filas | 20 columnas
+  Con cambios:   379 filas | 20 columnas
+
+  Llaves únicas original   : 376
+  Llaves únicas con cambios: 379
+  En ambos                 : 376
+
+  NUEVAS EN COPIA (no estaban en original): 3
+ CODIGO     C.I.                 NOMBRE COMPLETO ESTADO    FECHA DE INGRESO     CIUDAD
+ZAS-349 14327262 Carlos David  Sandoval  Rivero  ACTIVO 2026-05-04 00:00:00 Santa Cruz
+ZAS-351 13273088    Juan Carlos  Vaca  Ascarrun  ACTIVO 2026-05-10 00:00:00 Santa Cruz
+ZAS-352  9794931          Karen  Pessoa  Suárez  ACTIVO 2026-05-04 00:00:00 Santa Cruz
+
+  COLUMNAS CON DIFERENCIAS (en registros existentes en ambos):
+    DPTO                          :  359 filas cambiaron
+    ESTADO                        :    4 filas cambiaron
+    SUPERVISOR                    :    3 filas cambiaron
+    FECHA DE INGRESO              :    1 filas cambiaron
+
+  Muestra de cambios en [DPTO]:
+    Gloria Belen Pantoja Veizaga        | antes: SC                        | ahora: Santa Cruz
+    Ximena Céspedes Gutiérrez           | antes: SC                        | ahora: Santa Cruz
+    Verónica Del Pilar  Navarro  Sanjin | antes: CB                        | ahora: Cochabamba
+    Darla Estephani  Miranda  Arce      | antes: CB                        | ahora: Cochabamba
+    Zabdy Suriel  Ayaviri  Carvajal     | antes: OR                        | ahora: Oruro
+
+  Muestra de cambios en [ESTADO]:
+    Magaly Selena  Vacaflor  Gutierrez  | antes: INACTIVO                  | ahora: ACTIVO
+    Erika Valeria  Nuñez  Peña          | antes: INACTIVO                  | ahora: ACTIVO
+    Debora Roxana   Cuarita  Ibarra     | antes: INACTIVO                  | ahora: ACTIVO
+    María Jenny  Lopez  Robles          | antes: INACTIVO                  | ahora: ACTIVO
+
+  Muestra de cambios en [SUPERVISOR]:
+    Gonzalo Rafael Alba Velasco         | antes: Zas-4                     | ahora: Zas-58
+    Erika Valeria  Nuñez  Peña          | antes: Zas-56                    | ahora: Zas-224
+    Olga  Arancibia  Hurtado            | antes: Zas-30                    | ahora: Zas-295
+
+  Filas duplicadas (CODIGO+CI): original=0, con cambios=0
+
+======================================================================
+FIN DEL ANÁLISIS
+======================================================================
